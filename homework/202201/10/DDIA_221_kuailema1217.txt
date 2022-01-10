@@ -1,0 +1,33 @@
+Chapter 7 Transactions
+
+A transaction is a way for an application to group several reads and writes together into a logical unit. (transaction: the mechanism of choice for simplifying issues) -- safety guarantees
+Not every application needs transactions.
+
+1. The Slippery Concept of a Transaction
+
+	transactions have advantages and limitations. trade-offs.
+
+	1. The Meaning of ACID
+	   implementation of ACID in diff dbs and apps are diff.
+	   (1) Atomicity: the ability to abort a transaction on error and have all writes from that transaction. (abortability)
+	   (2) Consistency: you have certain statements about your data (invariants) that must always be true. (is a property of the application, not something that the database can guarantee)
+	   (3) Isolation: concurrently executing transactions are isolated from each other. (pretend transactions are running one after another, though in reality, they run concurrently)
+	                  in practice, serializable isolation is rarely used, because it carries a performance penalty.
+	   (4) Durability: once a transaction has com‐ mitted successfully, any data it has written will not be forgotten, even if there is a hardware fault or the database crashes
+		           e.g. single-node database writes to hard drive or SSD, and involves a write-ahead log or similar (for recovery usage)
+		           e.g. replicated database: durability may mean that the data has been successfully copied to some number of nodes. (a database must wait until these writes or replications are complete before reporting a transaction as successfully committed.)		
+	   * Replication and Durability: In practice, there is no one technique that can provide absolute guarantees. Only various risk-reduction techniques should be use together: writing to disk, replicating to remote machines, and backups.
+
+	2. Single-Object and Multi-Object Operations
+	   Two examples of Atomicity and Isolation. (in an email unread app)
+	   <1> Atomicity ensures that if an error occurs any prior writes from that transaction are undone, to avoid an inconsistent state.
+	   <2> Violating isolation: one transaction reads another transaction’s uncommit‐ ted writes (a “dirty read”). Solution: Isolation prevents this issue by ensuring that user 2 sees either both the inserted email and the updated counter, or neither, but not an inconsistent halfway point.
+	   Multi-object transactions require ways to determine which read and write operations belong to the same transaction. 
+	   e.g. relational databases, on any particular connection, everything between a BEGIN TRANSACTION and a COMMIT statement is considered to be part of the same transaction. (done with TCP connection))
+	   e.g. nonrelational databases don't have this, bad.
+
+	   (1) Single-object writes
+	       Storage engines almost universally aim to provide atomicity and isolation on the level of a single object on one node.
+	       Realization: atomicity - a log for crash recovery; isolation - a lock on each object
+	       More complex atomic operations.
+	       However: A transaction is usually understood as a mechanism for grouping multiple operations on multiple objects into one unit of execution.
