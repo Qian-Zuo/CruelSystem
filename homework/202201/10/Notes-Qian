@@ -1,0 +1,10 @@
+1. Ambiguity requires a tolerance system.
+  ACID: atomicity, consistency, isolation, and durability.
+      - Consistency: the data must always be true and it depends on the application's notion of invariants. It is a property of application.
+      - Isolation: It is a property of database. It is to avoid concurrency problems such as race conditions.
+      It is to make the result looks like run serially(串行)，but they mostly run concurently.
+      - Atomicity: It is a property of database. 原子性如果在一系列写入过程中发生错误，事务应该被中止，并且到那时为止的写入应该被丢弃。
+      其他换句话说，数据库让您不必担心部分失败，通过提供全有或全无的保证。
+      - Durability: It is a property of database. Once the data is committed successfully, it will be momoerized even if there is a hardware fault or
+      database crash. In practice, there is no one technique that can provide absolute guarantees. There are
+      only various risk-reduction techniques.
