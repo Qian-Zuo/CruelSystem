@@ -1,0 +1,6 @@
+1. Ambiguity requires a tolerance system.
+  ACID: atomicity, consistency, isolation, and durability.
+      - Consistency: the data must always be true and it depends on the application's notion of invariants. It is a property of application.
+      - Isolation: It is a property of database.
+      - Atomicity: It is a property of database.
+      - Durability: It is a property of database.
