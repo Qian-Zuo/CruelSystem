@@ -1,0 +1,64 @@
+Transaction
+
+Read committed
+	- Dirty read
+	- Dirty writes
+	- Multi-object atomicity
+
+Snapshot isolation
+	- No read skew
+	- No lost updates
+
+Serializable
+	- No write skew
+	- Two phase locking
+	- Actual serial execution
+
+
+
+ACID
+
+
+Atomicity:
+	- All or nothing
+
+Consistency
+	- Transaction happens in the future must see the effects of committed transactions
+
+Isolation (serializability)
+	- Executing transactions are isolated from each other.
+		○ The result will be same if they run serially. 
+Durability
+	- One the transaction committed successfully, the data should not be forgotten, even there is hardware fault. (flush into the disk)
+
+BASE
+Basically available
+
+Soft state
+
+Eventually consistency
+
+
+Why transaction is important: 
+	- Database software and hardware may fail at any time(Including in the middle of a write operation)
+	- Application may crash at anytime
+	- Network partition
+	- Concurrent ovewriting
+	- Read stale data (data is partially updated)
+	- Race condition 
+
+Transaction:
+Group several read and writes to a logic unit.  All the actions act as one operation: either all succeed(commit) or fail (revert, rollback)
+
+
+SQL vs NoSQL choose:
+	- Strong transaction guarantee
+
+Single object vs multi object operations
+
+For multi objects operation: 
+	- Relational DB, use 
+		○ BEGING TRANSACTION and COMMIT to group the operations in one transaction
+	- NoSQL DB
+		○ Even it has multi-object API, but it could not guarantee atomicity and isolation.
+	- Lots of distributed datastores abandoned the multi-object transaction, since it's hard to implement across partitions. (performance) 
